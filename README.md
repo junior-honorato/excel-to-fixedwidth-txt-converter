@@ -1,112 +1,74 @@
 📄 Excel → SIDE TXT Converter
-Automação para Estruturação de Analíticos de Contribuições (VGBL)
+Automação em Python para transformar planilhas Excel despadronizadas em arquivos TXT estruturados no padrão exigido pelo SIDE (FenaPrevi).
 
-Ferramenta em Python desenvolvida para transformar planilhas Excel contendo múltiplas contribuições (N linhas) em um arquivo TXT estruturado no padrão exigido pelo SIDE – Sistema para Intercâmbio de Documentos Eletrônicos, implementado pela FenaPrevi.
+📌 Problema
+No processo de portabilidade entre entidades previdenciárias, o analítico de contribuições precisa trafegar em um layout muito específico.
+Porém:
+Em cenários de ajustes ou retificações, os dados chegam das entidades em formato Excel totalmente despadronizado.
+Isso exige tratamento manual de colunas, formatação de datas e conversão de valores (para centavos inteiros).
+A estruturação linha a linha no padrão fixo de 1000 caracteres é complexa e suscetível a falhas.
+O retrabalho manual atrasa a importação sistêmica e aumenta o risco de erro humano em dados financeiros críticos.
 
-O objetivo é automatizar a padronização e geração do arquivo analítico necessário para importação de contribuições no processo de portabilidade de Previdência VGBL.
+🎯 Objetivo da Ferramenta
+Automatizar a padronização e geração do arquivo analítico, eliminando o trabalho manual de conversão e garantindo que os dados fiquem prontos para importação imediata no processo de portabilidade de Previdência VGBL.
 
-🎯 Contexto de Negócio
+A aplicação:
+Lê a planilha Excel com as múltiplas contribuições na pasta `entradas/`
+Detecta automaticamente a coluna de DATA e as colunas monetárias
+Converte as datas para o padrão exigido (AAAAMMDD)
+Transforma os valores monetários em centavos inteiros
+Remove possíveis linhas de totalização no rodapé (lixo de formatação)
+Estrutura e gera o arquivo TXT em layout fixo na pasta `saidas/`
 
-No processo de portabilidade entre entidades previdenciárias, o analítico de contribuições precisa ser:
+🧪 Exemplo de Execução
+Lendo arquivo recebido: analitico_portabilidade.xlsx…
+✔ Coluna de datas identificada.
+✔ Colunas de valores identificadas.
+Convertendo dados e formatando layout…
+✔ Sucesso! Arquivo TXT padrão SIDE gerado na pasta /saidas.
 
-Estruturado em layout específico
+💼 Impacto no Negócio
+A ferramenta contribui diretamente para:
+Redução drástica do retrabalho manual no tratamento de planilhas
+Mitigação de erro humano em dados financeiros (datas e valores)
+Agilidade na geração do analítico para importação sistêmica
+Maior confiabilidade e segurança no processo de portabilidade
+Padronização consistente dos dados trocados entre entidades
+Independência de layouts fixos de Excel, já que a detecção de colunas é inteligente
 
-Padronizado conforme regras acordadas no mercado
-
-Formatado corretamente para importação sistêmica
-
-O SIDE (Sistema para Intercâmbio de Documentos Eletrônicos), implementado pela FenaPrevi, padroniza essa troca entre entidades.
-
-Em cenários de ajustes ou retificações, os dados podem chegar em formato Excel despadronizado, exigindo:
-
-Tratamento manual
-
-Reorganização de colunas
-
-Conversão de datas
-
-Conversão de valores
-
-Estruturação linha a linha
-
-Este projeto elimina esse retrabalho manual, estruturando automaticamente as N linhas de contribuições da proposta e gerando o TXT pronto para importação.
-
-⚙️ O que a aplicação faz
-
-✔ Detecta automaticamente a coluna de DATA
-✔ Detecta duas colunas monetárias adjacentes
-✔ Converte datas para o padrão AAAAMMDD
-✔ Converte valores monetários para centavos inteiros
-✔ Remove possíveis linhas de totalização no rodapé
-✔ Gera arquivo TXT em layout fixo (1000 caracteres por linha)
-✔ Estrutura corretamente todas as N contribuições da proposta
-✔ Mantém compatibilidade com o padrão SIDE
-
-📊 Estrutura do Fluxo
-
-Recebe planilha Excel com múltiplas contribuições
-
-Detecta automaticamente os campos relevantes
-
-Normaliza e padroniza os dados
-
-Estrutura linha a linha conforme layout fixo
-
-Gera TXT pronto para importação no processo de portabilidade
+⚙️ Funcionalidades
+✔ Detecção automática de colunas relevantes (reduz dependência de layout fixo)
+✔ Conversão de datas e valores monetários para o padrão SIDE
+✔ Tratamento de arquivos protegidos por senha
+✔ Validação inteligente e remoção de linha totalizadora
+✔ Estruturação em layout fixo com padding correto (1000 caracteres/linha)
+✔ Interface simples e direta (CLI)
 
 🛠 Tecnologias Utilizadas
-
 Python 3
-
 pandas
-
-openpyxl
-
-xlrd
-
-msoffcrypto-tool
-
+openpyxl / xlrd
+msoffcrypto-tool (para arquivos protegidos)
 CLI interativo
 
+🖥️ Como usar
+Coloque o arquivo Excel despadronizado na pasta `entradas/`.
+Execute o script principal (`python seu_script.py`).
+Siga as instruções na tela para escolher o arquivo.
+O arquivo TXT formatado será gerado automaticamente na pasta `saidas/` pronto para uso.
+
 📂 Estrutura do Projeto
-entradas/  → planilhas Excel recebidas  
-saidas/    → TXT gerado no padrão SIDE  
+conversor-excel-txt-side/
+├── excel_to_TXT.py
+├── entradas/
+├── saidas/
+└── README.md
 
-▶️ Como Executar
+🤖 Uso de Inteligência Artificial
+A IA generativa foi utilizada como copiloto técnico, auxiliando principalmente em: estruturação da lógica de formatação, revisão de código e escrita de documentação.
 
-Coloque o arquivo Excel na pasta entradas/
-
-Execute o script
-
-Escolha o arquivo desejado
-
-O TXT será gerado automaticamente na pasta saidas/
-
-💡 Diferenciais Técnicos
-
-Detecção automática de colunas (reduz dependência de layout fixo no Excel)
-
-Tratamento de arquivos protegidos por senha
-
-Validação inteligente de linha totalizadora
-
-Estruturação em layout fixo com padding correto
-
-Compatibilidade com padrão de intercâmbio do mercado previdenciário
-
-🚀 Impacto Operacional
-
-Redução de retrabalho manual
-
-Mitigação de erro humano
-
-Agilidade na geração do analítico
-
-Maior confiabilidade no processo de portabilidade
-
-Padronização consistente dos dados
+O conhecimento do negócio (regras do SIDE, estrutura de portabilidade VGBL e tratamento das exceções das planilhas) foi aplicado manualmente.
 
 👤 Autor
-
 Arlindo Júnior Honorato
-Product Owner | Automação | IA aplicada a processos financeiros
+Product Owner | Automação | IA aplicada a processos financeiros e previdenciários
